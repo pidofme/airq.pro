@@ -9,7 +9,7 @@ import geoip2.database
 from geopy.geocoders import Nominatim
 from flask import Flask, request, send_from_directory, jsonify as flask_jsonify
 
-from exceptions import AirqError
+from .exceptions import AirqError
 
 app = Flask(__name__)
 app.config.update(dict(
@@ -19,6 +19,7 @@ app.config.update(dict(
     AQI_API_URL='https://api.waqi.info/feed/',
     AQI_API_TOKEN=os.environ.get('AQI_API_TOKEN', 'a80509ea0ada8c3d5a113999028b9e9b976a3f87')
 ))
+app.debug = bool(os.environ.get('AIRQ_DEBUG'))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 geo_reader = geoip2.database.Reader(app.config['GEOLITE'])
@@ -146,4 +147,4 @@ def airq(location):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
