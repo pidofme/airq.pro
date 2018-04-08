@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# url encode is not supported for now.
+curl airq.pro/"${1}"
